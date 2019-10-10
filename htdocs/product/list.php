@@ -278,6 +278,10 @@ else
 	foreach ($extrafields->attribute_label as $key => $val) $sql.=($extrafields->attribute_type[$key] != 'separate' ? ",ef.".$key.' as options_'.$key : '');
 	// Add fields from hooks
 	$parameters=array();
+	$reshook=$hookmanager->executeHooks('printFieldListFrom',$parameters);    // Note that $action and $object may have been modified by hook
+	$sql.=$hookmanager->resPrint;
+	// Add fields from hooks
+	$parameters=array();
 	$reshook=$hookmanager->executeHooks('printFieldListSelect',$parameters);    // Note that $action and $object may have been modified by hook
 	$sql.=$hookmanager->resPrint;
 	$sql.= ' FROM '.MAIN_DB_PREFIX.'product as p';
